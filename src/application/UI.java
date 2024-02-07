@@ -1,7 +1,11 @@
 package application;
 
 import chess.ChessPiece;
+import chess.ChessPosition;
 import chess.Color;
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class UI {
 
@@ -26,6 +30,10 @@ public class UI {
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
     //endregion
 
+    public static void clearScreen(){
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
     public static void printBoard(ChessPiece[][] chessPieces) {
         for (int i = 0; i < chessPieces.length; i++) {
             //print row id
@@ -39,7 +47,16 @@ public class UI {
         //print col id
         System.out.println("  a b c d e f g h");
     }
-
+    public static ChessPosition readChessPosition(Scanner sc){
+        try {
+            String input = sc.nextLine();
+            char column = input.charAt(0);
+            int row = Integer.parseInt(input.substring(1));
+            return new ChessPosition(column, row);
+        } catch (RuntimeException e) {
+            throw new InputMismatchException("Error reading ChessPosition, invalid values");
+        }
+    }
     private static void printChessPiece(ChessPiece chessPiece) {
         if (chessPiece == null) {
             System.out.print("-");
@@ -53,4 +70,5 @@ public class UI {
         //Extra space
         System.out.print(" ");
     }
+
 }
