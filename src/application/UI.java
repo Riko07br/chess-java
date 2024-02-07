@@ -30,24 +30,40 @@ public class UI {
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
     //endregion
 
-    public static void clearScreen(){
+    public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
+
     public static void printBoard(ChessPiece[][] chessPieces) {
         for (int i = 0; i < chessPieces.length; i++) {
             //print row id
             System.out.print((8 - i) + " ");
 
             for (int j = 0; j < chessPieces[i].length; j++) {
-                printChessPiece(chessPieces[i][j]);
+                printChessPiece(chessPieces[i][j], false);
             }
             System.out.println();
         }
         //print col id
         System.out.println("  a b c d e f g h");
     }
-    public static ChessPosition readChessPosition(Scanner sc){
+
+    public static void printBoard(ChessPiece[][] chessPieces, boolean[][] possibleMoves) {
+        for (int i = 0; i < chessPieces.length; i++) {
+            //print row id
+            System.out.print((8 - i) + " ");
+
+            for (int j = 0; j < chessPieces[i].length; j++) {
+                printChessPiece(chessPieces[i][j], possibleMoves[i][j]);
+            }
+            System.out.println();
+        }
+        //print col id
+        System.out.println("  a b c d e f g h");
+    }
+
+    public static ChessPosition readChessPosition(Scanner sc) {
         try {
             String input = sc.nextLine();
             char column = input.charAt(0);
@@ -57,9 +73,14 @@ public class UI {
             throw new InputMismatchException("Error reading ChessPosition, invalid values");
         }
     }
-    private static void printChessPiece(ChessPiece chessPiece) {
+
+    private static void printChessPiece(ChessPiece chessPiece, boolean colorBg) {
+        if (colorBg) {
+            System.out.print(ANSI_BLUE_BACKGROUND);
+        }
+
         if (chessPiece == null) {
-            System.out.print("-");
+            System.out.print("-" + ANSI_RESET);
         } else {
             if (chessPiece.getColor() == Color.WHITE) {
                 System.out.print(ANSI_WHITE + chessPiece + ANSI_RESET);
@@ -70,5 +91,6 @@ public class UI {
         //Extra space
         System.out.print(" ");
     }
+
 
 }
