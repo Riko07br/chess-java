@@ -20,47 +20,19 @@ public class Rook extends ChessPiece {
         boolean[][] moves = new boolean[getBoard().getRows()][getBoard().getColumns()];
         Position positionToCheck = new Position(0, 0);
 
-        //above checks
-        positionToCheck.setValues(position.getRow() - 1, position.getColumn());
-        while (getBoard().positionExists(positionToCheck) && !getBoard().theresAPiece(positionToCheck)) {
-            moves[positionToCheck.getRow()][positionToCheck.getColumn()] = true;
-            positionToCheck.setRow(positionToCheck.getRow() - 1);
-        }
-        if (getBoard().positionExists(positionToCheck) && isThereOpponentPiece(positionToCheck)) {
-            moves[positionToCheck.getRow()][positionToCheck.getColumn()] = true;
-        }
+        int[] rowOffsets = {-1, 1, 0, 0};
+        int[] columnOffsets = {0, 0, 1, -1};
 
-        //below checks
-        positionToCheck.setValues(position.getRow() + 1, position.getColumn());
-        while (getBoard().positionExists(positionToCheck) && !getBoard().theresAPiece(positionToCheck)) {
-            moves[positionToCheck.getRow()][positionToCheck.getColumn()] = true;
-            positionToCheck.setRow(positionToCheck.getRow() + 1);
+        for (int i = 0; i < 4; i++) {
+            positionToCheck.setValues(position.getRow() + rowOffsets[i], position.getColumn() + columnOffsets[i]);
+            while (getBoard().positionExists(positionToCheck) && !getBoard().theresAPiece(positionToCheck)) {
+                moves[positionToCheck.getRow()][positionToCheck.getColumn()] = true;
+                positionToCheck.setValues(positionToCheck.getRow() + rowOffsets[i], positionToCheck.getColumn() + columnOffsets[i]);
+            }
+            if (getBoard().positionExists(positionToCheck) && isThereOpponentPiece(positionToCheck)) {
+                moves[positionToCheck.getRow()][positionToCheck.getColumn()] = true;
+            }
         }
-        if (getBoard().positionExists(positionToCheck) && isThereOpponentPiece(positionToCheck)) {
-            moves[positionToCheck.getRow()][positionToCheck.getColumn()] = true;
-        }
-
-        //left checks
-        positionToCheck.setValues(position.getRow(), position.getColumn() - 1);
-        while (getBoard().positionExists(positionToCheck) && !getBoard().theresAPiece(positionToCheck)) {
-            moves[positionToCheck.getRow()][positionToCheck.getColumn()] = true;
-            positionToCheck.setColumn(positionToCheck.getColumn() - 1);
-        }
-        if (getBoard().positionExists(positionToCheck) && isThereOpponentPiece(positionToCheck)) {
-            moves[positionToCheck.getRow()][positionToCheck.getColumn()] = true;
-        }
-
-        //right checks
-        positionToCheck.setValues(position.getRow(), position.getColumn() + 1);
-        while (getBoard().positionExists(positionToCheck) && !getBoard().theresAPiece(positionToCheck)) {
-            moves[positionToCheck.getRow()][positionToCheck.getColumn()] = true;
-            positionToCheck.setColumn(positionToCheck.getColumn() + 1);
-        }
-        if (getBoard().positionExists(positionToCheck) && isThereOpponentPiece(positionToCheck)) {
-            moves[positionToCheck.getRow()][positionToCheck.getColumn()] = true;
-        }
-
-
         return moves;
     }
 }
