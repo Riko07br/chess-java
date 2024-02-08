@@ -1,5 +1,6 @@
 package application;
 
+import chess.ChessMatch;
 import chess.ChessPiece;
 import chess.ChessPosition;
 import chess.Color;
@@ -33,6 +34,14 @@ public class UI {
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
+    }
+
+    public static void printMatch(ChessMatch match) {
+        printBoard(match.getPieces());
+        System.out.println();
+        System.out.println("Turn " + match.getTurn());
+        System.out.println();
+        System.out.println("Current player " + match.getCurrentPlayer());
     }
 
     public static void printBoard(ChessPiece[][] chessPieces) {
