@@ -38,8 +38,15 @@ public class Program {
                 }
 
                 if (match.getPromoted() != null) {
-                    System.out.println("Enter piece for promotion: [B,N,R,Q]");
+                    System.out.print("Enter piece for promotion [B,N,R,Q]: ");
                     String pieceType = sc.nextLine();
+
+                    while (!pieceType.equals("B") && !pieceType.equals("R") && !pieceType.equals("N") && !pieceType.equals("Q")) {
+                        System.out.println();
+                        System.out.print("Invalid piece! Enter piece for promotion [B,N,R,Q]: ");
+                        pieceType = sc.nextLine();
+                    }
+
                     match.replacePromoted(pieceType);
                 }
 
