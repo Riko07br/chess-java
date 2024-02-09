@@ -20,46 +20,16 @@ public class King extends ChessPiece {
         boolean[][] moves = new boolean[getBoard().getRows()][getBoard().getColumns()];
         Position positionToCheck = new Position(0, 0);
 
-        //above check
-        positionToCheck.setValues(position.getRow() - 1, position.getColumn());
-        if (getBoard().positionExists(positionToCheck) && canMove(positionToCheck)) {
-            moves[positionToCheck.getRow()][positionToCheck.getColumn()] = true;
+        int[] rowOffsets = {-1, -1, -1, 0, 0, 1, 1, 1};
+        int[] columnOffsets = {-1, 0, 1, -1, 1, -1, 0, 1};
+
+        for (int i = 0; i < 8; i++) {
+            positionToCheck.setValues(position.getRow() + rowOffsets[i], position.getColumn() + columnOffsets[i]);
+            if (getBoard().positionExists(positionToCheck) && canMove(positionToCheck)) {
+                moves[positionToCheck.getRow()][positionToCheck.getColumn()] = true;
+            }
         }
-        //above-left check
-        positionToCheck.setValues(position.getRow() - 1, position.getColumn() - 1);
-        if (getBoard().positionExists(positionToCheck) && canMove(positionToCheck)) {
-            moves[positionToCheck.getRow()][positionToCheck.getColumn()] = true;
-        }
-        //left check
-        positionToCheck.setValues(position.getRow(), position.getColumn() - 1);
-        if (getBoard().positionExists(positionToCheck) && canMove(positionToCheck)) {
-            moves[positionToCheck.getRow()][positionToCheck.getColumn()] = true;
-        }
-        //left-bellow check
-        positionToCheck.setValues(position.getRow() + 1, position.getColumn() - 1);
-        if (getBoard().positionExists(positionToCheck) && canMove(positionToCheck)) {
-            moves[positionToCheck.getRow()][positionToCheck.getColumn()] = true;
-        }
-        //bellow check
-        positionToCheck.setValues(position.getRow() + 1, position.getColumn());
-        if (getBoard().positionExists(positionToCheck) && canMove(positionToCheck)) {
-            moves[positionToCheck.getRow()][positionToCheck.getColumn()] = true;
-        }
-        //bellow-right check
-        positionToCheck.setValues(position.getRow() + 1, position.getColumn() + 1);
-        if (getBoard().positionExists(positionToCheck) && canMove(positionToCheck)) {
-            moves[positionToCheck.getRow()][positionToCheck.getColumn()] = true;
-        }
-        //right check
-        positionToCheck.setValues(position.getRow(), position.getColumn() + 1);
-        if (getBoard().positionExists(positionToCheck) && canMove(positionToCheck)) {
-            moves[positionToCheck.getRow()][positionToCheck.getColumn()] = true;
-        }
-        //right-above check
-        positionToCheck.setValues(position.getRow() - 1, position.getColumn() + 1);
-        if (getBoard().positionExists(positionToCheck) && canMove(positionToCheck)) {
-            moves[positionToCheck.getRow()][positionToCheck.getColumn()] = true;
-        }
+
         return moves;
     }
 
